@@ -17,6 +17,13 @@ import threading
 import time
 
 from http.server import HTTPServer, SimpleHTTPRequestHandler
+
+class QuietHTTPHandler(SimpleHTTPRequestHandler):
+    def log_error(self, format, *args):
+        exc_name = getattr(args[0], '__class__', lambda: None).__name__
+        if exc_name in ('ConnectionResetError', 'BrokenPipeError'):
+            return
+        super().log_error(format, *args)
 from gtts import gTTS
 
 from pychromecast.cast_channel_pb2 import CastMessage
@@ -146,7 +153,7 @@ def play_media(sock, sid, url, ctype, title):
 
 def main():
     os.chdir("/tmp")
-    server = HTTPServer(("0.0.0.0", PORT), SimpleHTTPRequestHandler)
+    server = HTTPServer(("0.0.0.0", PORT), QuietHTTPHandler)
     threading.Thread(target=server.serve_forever, daemon=True).start()
     print(f"  HTTP server on :{PORT}")
 
