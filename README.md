@@ -31,3 +31,8 @@ Change `CAST_IP` at the top of `chromecast_demo.py` to point to your Chromecast.
 |--|--|
 | `chromecast_demo.py` | Full demo: avatar display + simultaneous audio |
 | `Daryl_Agent_Avatar.png` | AI agent avatar image |
+
+
+---
+
+> **Privacy note:** Internal IP addresses originally present in this repository have been replaced with placeholder addresses in the `10.10.0.0/16` range to protect the owner's private network topology. Functionality is unchanged; configure real addresses via environment variables where supported.
